@@ -1,0 +1,59 @@
+<!-- sms_notifications/templates/sms_notifications/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flash Sale SMS Notifications</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Subscribe to Flash Sale Notifications</h1>
+        <div class="form-group">
+            <input type="text" id="phone" placeholder="Enter phone number">
+            <button onclick="subscribe()">Subscribe</button>
+        </div>
+    </div>
+
+    <script>
+        async function subscribe() {
+            const phone = document.getElementById('phone').value;
+
+            try {
+                const response = await fetch('/subscribe/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({phone_number: phone})
+                });
+
+                const data = await response.json();
+                alert(data.message || data.error);
+            } catch (error) {
+                alert('Error subscribing. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
